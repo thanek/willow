@@ -67,7 +67,7 @@ void init_ui(void)
 #endif
 
             lv_label_set_text_static(lbl_btn_cancel, "Anuluj");
-            lv_label_set_text_static(lbl_hdr, "Willow!");
+            lv_label_set_text_static(lbl_hdr, "ALEXA");
             lv_obj_add_flag(btn_cancel, LV_OBJ_FLAG_HIDDEN);
             lv_obj_add_flag(lbl_ln1, LV_OBJ_FLAG_HIDDEN);
             lv_obj_add_flag(lbl_ln2, LV_OBJ_FLAG_HIDDEN);

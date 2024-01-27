@@ -155,7 +155,7 @@ URL,data,string,$WAS_URL
 WIFI,namespace,,
 PSK,data,string,$PASSWORD
 SSID,data,string,$SSID" > build/nvs.csv
-    /opt/esp/idf/components/nvs_flash/nvs_partition_generator/nvs_partition_gen.py generate \
+    $IDF_PATH/components/nvs_flash/nvs_partition_generator/nvs_partition_gen.py generate \
         --version 2 build/nvs.csv build/nvs.bin 0x24000
 }
 
