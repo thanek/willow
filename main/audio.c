@@ -64,7 +64,7 @@
 #define HTTP_STREAM_TIMEOUT_MS_POST_REQUEST 10 * 1000
 
 #define MULTINET_TWDT   30
-#define STR_WAKE_LEN    25
+#define STR_WAKE_LEN    27
 #define WIS_URL_TTS_ARG "?format=WAV&speaker=CLB&text="
 
 typedef enum willow_http_stream {
@@ -364,7 +364,7 @@ static esp_err_t cb_ar_event(audio_rec_evt_t *are, void *data)
             if (lvgl_port_lock(lvgl_lock_timeout)) {
                 lv_obj_clear_flag(lbl_ln4, LV_OBJ_FLAG_HIDDEN);
                 lv_obj_set_style_text_align(lbl_ln4, LV_TEXT_ALIGN_LEFT, 0);
-                lv_label_set_text(lbl_ln4, "#ff0000 Unrecognized Command");
+                lv_label_set_text(lbl_ln4, "#ff0000 Polecenie nierozpoznane");
                 lvgl_port_unlock();
             }
 
@@ -409,9 +409,9 @@ static esp_err_t cb_ar_event(audio_rec_evt_t *are, void *data)
                 lv_obj_clear_flag(lbl_ln3, LV_OBJ_FLAG_HIDDEN);
 
                 if (strcmp(speech_rec_mode, "Multinet") == 0) {
-                    lv_label_set_text_static(lbl_ln3, "Say local command...");
+                    lv_label_set_text_static(lbl_ln3, "Wydaj polecenie...");
                 } else if (strcmp(speech_rec_mode, "WIS") == 0) {
-                    lv_label_set_text_static(lbl_ln3, "Say command...");
+                    lv_label_set_text_static(lbl_ln3, "Wydaj polecenie...");
                 } else {
                     return ESP_ERR_INVALID_ARG;
                 }
@@ -452,7 +452,7 @@ static esp_err_t cb_ar_event(audio_rec_evt_t *are, void *data)
                     lv_obj_clear_flag(lbl_ln2, LV_OBJ_FLAG_HIDDEN);
                     lv_obj_add_flag(lbl_ln3, LV_OBJ_FLAG_HIDDEN);
 
-                    lv_label_set_text_static(lbl_ln1, "I heard command:");
+                    lv_label_set_text_static(lbl_ln1, "Zrozumiałem komendę:");
                     lv_label_set_text(lbl_ln2, lookup_cmd_multinet(command_id));
                     lvgl_port_unlock();
                 }
@@ -606,7 +606,7 @@ static esp_err_t hdl_ev_hs_to_api(http_stream_event_msg_t *msg)
                 if (cJSON_IsString(speaker_status) && speaker_status->valuestring != NULL) {
                     lv_label_set_text(lbl_ln1, speaker_status->valuestring);
                 } else {
-                    lv_label_set_text(lbl_ln1, "I heard:");
+                    lv_label_set_text(lbl_ln1, "Zrozumiałem:");
                 }
                 if (cJSON_IsString(text) && text->valuestring != NULL) {
                     lv_label_set_text(lbl_ln2, text->valuestring);
@@ -905,7 +905,7 @@ static void at_read(void *data)
                     recording = false;
                     stream_to_api = false;
                     if (lvgl_port_lock(lvgl_lock_timeout)) {
-                        lv_label_set_text_static(lbl_ln3, multiwake_won ? "Thinking..." : "WOW Active - Exiting");
+                        lv_label_set_text_static(lbl_ln3, multiwake_won ? "Myślę..." : "WOW Active - Exiting");
                         lv_obj_add_flag(btn_cancel, LV_OBJ_FLAG_HIDDEN);
                         lvgl_port_unlock();
                     }
@@ -997,7 +997,7 @@ esp_err_t init_audio(void)
 #endif
     } else if (strcmp(wake_word, "alexa") == 0) {
 #if defined(CONFIG_SR_WN_WN9_ALEXA) || defined(CONFIG_SR_WN_WN9_ALEXA_MULTI)
-        strncpy(wake_help, "Say 'Alexa' to start!", STR_WAKE_LEN);
+        strncpy(wake_help, "Powiedz ALEXA by zacząć", STR_WAKE_LEN);
 #endif
     } else if (strcmp(wake_word, "hilexin") == 0) {
 #if defined(CONFIG_SR_WN_WN9_HILEXIN) || defined(CONFIG_SR_WN_WN9_HILEXIN_MULTI)
@@ -1007,7 +1007,7 @@ esp_err_t init_audio(void)
 
     if (strlen(wake_help) == 0) {
         ESP_LOGE(TAG, "selected wake word (%s) not supported", wake_word);
-        strncpy(wake_help, "Ready!", STR_WAKE_LEN);
+        strncpy(wake_help, "Gotowy!", STR_WAKE_LEN);
     }
     free(wake_word);
 

@@ -89,7 +89,7 @@ void restart_delayed(void)
     ESP_LOGI(TAG, "restarting after %" PRIu32 " seconds", delay);
 
     if (lvgl_port_lock(lvgl_lock_timeout)) {
-        lv_label_set_text_fmt(lbl_ln4, "Restarting in %" PRIu32 " seconds", delay);
+        lv_label_set_text_fmt(lbl_ln4, "Restart za %" PRIu32 " sekund", delay);
         lv_obj_clear_flag(lbl_ln4, LV_OBJ_FLAG_HIDDEN);
         lvgl_port_unlock();
     }

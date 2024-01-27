@@ -104,12 +104,12 @@ static void IRAM_ATTR cb_ws_event(const void *arg_evh, const esp_event_base_t *b
                             if (cJSON_IsString(speech) && speech->valuestring != NULL
                                 && strlen(speech->valuestring) > 0) {
                                 cJSON_IsTrue(ok) ? war.fn_ok(speech->valuestring) : war.fn_err(speech->valuestring);
-                                lv_label_set_text_static(lbl_ln4, "Response:");
+                                lv_label_set_text_static(lbl_ln4, "Odpowiedź:");
                                 lv_label_set_text(lbl_ln5, speech->valuestring);
                             } else {
-                                cJSON_IsTrue(ok) ? war.fn_ok("Success") : war.fn_err("Error");
-                                lv_label_set_text_static(lbl_ln4, "Command status:");
-                                lv_label_set_text(lbl_ln5, cJSON_IsTrue(ok) ? "Success!" : "Error");
+                                cJSON_IsTrue(ok) ? war.fn_ok("Sukces") : war.fn_err("Błąd");
+                                lv_label_set_text_static(lbl_ln4, "Status polecenia:");
+                                lv_label_set_text(lbl_ln5, cJSON_IsTrue(ok) ? "Suckes" : "Błąd");
                             }
                             lvgl_port_unlock();
                             reset_timer(hdl_display_timer, config_get_int("display_timeout", DEFAULT_DISPLAY_TIMEOUT),
@@ -188,7 +188,7 @@ static void IRAM_ATTR cb_ws_event(const void *arg_evh, const esp_event_base_t *b
 
                     ESP_LOGI(TAG, "restarting to apply NVS changes");
                     if (lvgl_port_lock(lvgl_lock_timeout)) {
-                        lv_label_set_text_static(lbl_ln3, "Connectivity Updated");
+                        lv_label_set_text_static(lbl_ln3, "Łączność zaktualizowana");
                         lv_obj_add_flag(lbl_ln1, LV_OBJ_FLAG_HIDDEN);
                         lv_obj_add_flag(lbl_ln2, LV_OBJ_FLAG_HIDDEN);
                         lv_obj_add_flag(lbl_ln4, LV_OBJ_FLAG_HIDDEN);
@@ -321,7 +321,7 @@ static void IRAM_ATTR cb_ws_event(const void *arg_evh, const esp_event_base_t *b
                     if (strcmp(json_cmd->valuestring, "restart") == 0) {
                         ESP_LOGI(TAG, "restart command received. restart");
                         if (lvgl_port_lock(lvgl_lock_timeout)) {
-                            lv_label_set_text_static(lbl_ln3, "WAS Restart");
+                            lv_label_set_text_static(lbl_ln3, "Restart serwera WAS");
                             lv_obj_add_flag(lbl_ln1, LV_OBJ_FLAG_HIDDEN);
                             lv_obj_add_flag(lbl_ln2, LV_OBJ_FLAG_HIDDEN);
                             lv_obj_add_flag(lbl_ln4, LV_OBJ_FLAG_HIDDEN);
@@ -399,7 +399,7 @@ esp_err_t init_was(void)
     if (lvgl_port_lock(lvgl_lock_timeout)) {
         lv_obj_clear_flag(lbl_ln4, LV_OBJ_FLAG_HIDDEN);
         lv_obj_set_style_text_align(lbl_ln4, LV_TEXT_ALIGN_CENTER, 0);
-        lv_label_set_text_static(lbl_ln4, "Connecting to WAS...");
+        lv_label_set_text_static(lbl_ln4, "Łączę z serwerem WAS...");
         lvgl_port_unlock();
     }
 
@@ -669,7 +669,7 @@ static void notify_task(void *data)
 
     if (lvgl_port_lock(lvgl_lock_timeout)) {
         if (nd->text == NULL) {
-            lv_label_set_text_static(lbl_ln3, "Notification Active");
+            lv_label_set_text_static(lbl_ln3, "Powiadomienie aktywne");
         } else {
             lv_label_set_text(lbl_ln3, nd->text);
             free(nd->text);

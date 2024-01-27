@@ -66,8 +66,8 @@ void init_ui(void)
             lv_obj_add_style(lbl_btn_cancel, &lv_st_willow, 0);
 #endif
 
-            lv_label_set_text_static(lbl_btn_cancel, "Cancel");
-            lv_label_set_text_static(lbl_hdr, "Welcome to Willow!");
+            lv_label_set_text_static(lbl_btn_cancel, "Anuluj");
+            lv_label_set_text_static(lbl_hdr, "Willow!");
             lv_obj_add_flag(btn_cancel, LV_OBJ_FLAG_HIDDEN);
             lv_obj_add_flag(lbl_ln1, LV_OBJ_FLAG_HIDDEN);
             lv_obj_add_flag(lbl_ln2, LV_OBJ_FLAG_HIDDEN);
@@ -91,12 +91,12 @@ void init_ui(void)
 
             if (strcmp(speech_rec_mode, "Multinet") == 0) {
 #if defined(WILLOW_SUPPORT_MULTINET)
-                lv_label_set_text_static(lbl_ln3, "Starting up (local)...");
+                lv_label_set_text_static(lbl_ln3, "Uruchamianie...");
 #else
-                lv_label_set_text_static(lbl_ln3, "Multinet Not Supported");
+                lv_label_set_text_static(lbl_ln3, "Multinet wyłączony");
 #endif
             } else if (strcmp(speech_rec_mode, "WIS") == 0) {
-                lv_label_set_text_static(lbl_ln3, "Starting up (server)...");
+                lv_label_set_text_static(lbl_ln3, "Uruchamianie...");
             }
             lv_obj_clear_flag(lbl_ln3, LV_OBJ_FLAG_HIDDEN);
 

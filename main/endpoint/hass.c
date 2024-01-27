@@ -145,7 +145,7 @@ end:
                 if (hir.has_speech) {
                     hir.ok ? war.fn_ok(hir.speech) : war.fn_err(hir.speech);
                 } else {
-                    hir.ok ? war.fn_ok("Success") : war.fn_err("Error");
+                    hir.ok ? war.fn_ok("Sukces") : war.fn_err("Error");
                 }
 
                 if (lvgl_port_lock(lvgl_lock_timeout)) {
@@ -155,11 +155,11 @@ end:
                     lv_obj_set_style_text_align(lbl_ln5, LV_TEXT_ALIGN_LEFT, 0);
                     lv_obj_remove_event_cb(lbl_ln4, cb_btn_cancel);
                     if (hir.has_speech) {
-                        lv_label_set_text_static(lbl_ln4, "Response:");
+                        lv_label_set_text_static(lbl_ln4, "Odpowiedź:");
                         lv_label_set_text(lbl_ln5, hir.speech);
                     } else {
-                        lv_label_set_text_static(lbl_ln4, "Command status:");
-                        lv_label_set_text(lbl_ln5, hir.ok ? "Success!" : "Error");
+                        lv_label_set_text_static(lbl_ln4, "Status polecenia:");
+                        lv_label_set_text(lbl_ln5, hir.ok ? "Sukces!" : "Błąd");
                     }
                     lvgl_port_unlock();
                 }

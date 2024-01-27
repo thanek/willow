@@ -78,11 +78,11 @@ end:
         lv_obj_clear_flag(lbl_ln4, LV_OBJ_FLAG_HIDDEN);
         lv_obj_clear_flag(lbl_ln5, LV_OBJ_FLAG_HIDDEN);
         lv_obj_remove_event_cb(lbl_ln4, cb_btn_cancel);
-        lv_label_set_text_static(lbl_ln4, "Command status:");
+        lv_label_set_text_static(lbl_ln4, "Status polecenia:");
         if (body != NULL && strlen(body) > 1) {
             lv_label_set_text(lbl_ln5, body);
         } else {
-            lv_label_set_text(lbl_ln5, ok ? "Success" : "Error");
+            lv_label_set_text(lbl_ln5, ok ? "Sukces" : "Błąd");
         }
         lvgl_port_unlock();
     }

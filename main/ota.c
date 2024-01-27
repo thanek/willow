@@ -152,7 +152,7 @@ void ota_task(void *data)
 
     ESP_LOGI(TAG, "OTA completed, restarting");
     if (lvgl_port_lock(lvgl_lock_timeout)) {
-        lv_label_set_text_static(lbl_ln3, "Upgrade Done");
+        lv_label_set_text_static(lbl_ln3, "Aktualizacja zakończona");
         lvgl_port_unlock();
     }
     restart_delayed();
@@ -162,7 +162,7 @@ err:
     esp_http_client_cleanup(hdl_hc);
     ESP_LOGI(TAG, "OTA failed, restarting");
     if (lvgl_port_lock(lvgl_lock_timeout)) {
-        lv_label_set_text_static(lbl_ln3, "Upgrade Failed");
+        lv_label_set_text_static(lbl_ln3, "Aktualizacja nie powiodła się");
         lvgl_port_unlock();
     }
     restart_delayed();
@@ -177,7 +177,7 @@ void ota_start(char *url)
         lv_obj_add_flag(lbl_ln2, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(lbl_ln4, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(lbl_ln5, LV_OBJ_FLAG_HIDDEN);
-        lv_label_set_text_static(lbl_ln3, "Starting Upgrade");
+        lv_label_set_text_static(lbl_ln3, "Rozpoczynam aktualizację");
         lv_obj_clear_flag(lbl_ln3, LV_OBJ_FLAG_HIDDEN);
         lvgl_port_unlock();
     }
