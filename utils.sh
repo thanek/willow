@@ -4,6 +4,12 @@ set -e # bail on error
 export WILLOW_PATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$WILLOW_PATH"
 
+export ADF_VER="willow-main-2024010900"
+export IDF_PATH="$WILLOW_PATH/deps/idf"
+source $IDF_PATH/export.sh
+export CI=1
+export PORT=/dev/tty.usbmodem14301
+
 export PLATFORM="esp32s3" # Current general family
 export FLASH_BAUD=2000000 # Optimistic but seems to work for me for now
 export CONSOLE_BAUD=2000000 # Subject to change
@@ -114,6 +120,7 @@ check_build_host() {
 }
 
 check_container(){
+    return
     if [ "$container" ]; then
         return
     fi
@@ -135,17 +142,6 @@ check_deps() {
     if [ ! -d deps/esp-adf ]; then
         echo "You need to run install first"
         exit 1
-    fi
-}
-
-generate_speech_commands() {
-    rm -rf build/srmodels
-    /usr/bin/python3 speech_commands/generate_commands.py
-
-    if [ -r "$WILLOW_PATH"/speech_commands/commands_en.txt ]; then
-        echo "Linking custom speech commands"
-        ln -sf "$WILLOW_PATH"/speech_commands/commands_en.txt \
-            "$WILLOW_PATH"/components/esp-sr/model/multinet_model/fst/commands_en.txt
     fi
 }
 
@@ -244,7 +240,6 @@ fullclean)
 build)
     check_container
     check_deps
-    [ "$CI" ] || generate_speech_commands
     if [ $2 ]; then
         echo "Adding timestamp to dev build"
         TS=$(date '+%d-%m-%Y_%H:%M:%S')

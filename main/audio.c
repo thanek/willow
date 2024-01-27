@@ -106,6 +106,15 @@ void play_audio_ok(void *data)
     esp_audio_play(hdl_ea, AUDIO_CODEC_TYPE_DECODER, "spiffs://spiffs/user/audio/success.wav", 0);
 }
 
+void play_wake_confirmation(void *data)
+{
+    es7210_set_mute(true);
+    gpio_set_level(get_pa_enable_gpio(), 1);
+    esp_audio_sync_play(hdl_ea, "spiffs://spiffs/user/audio/success.wav", 0);
+    es7210_set_mute(false);
+    gpio_set_level(get_pa_enable_gpio(), 0);
+}
+
 static void play_audio_wis_tts(void *data)
 {
     char *url = NULL;
@@ -374,7 +383,9 @@ static esp_err_t cb_ar_event(audio_rec_evt_t *are, void *data)
             }
             if (!config_get_bool("multiwake", false)) {
                 if (config_get_bool("wake_confirmation", DEFAULT_WAKE_CONFIRMATION)) {
-                    play_audio_ok(NULL);
+                       ESP_LOGI(TAG, "WAKE CONFIRMATION START");
+                        play_wake_confirmation(NULL);
+                        ESP_LOGI(TAG, "WAKE CONFIRMATION END");
                 }
             }
             // win by default so in case WAS multiwake handling goes wrong we act normally
